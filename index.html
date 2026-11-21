@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfólio profissional de Dylan Rafael Mamani Duarte — Engenharia de Dados, Análise de Dados e Desenvolvimento Backend." />
+  <meta name="author" content="Dylan Rafael Mamani Duarte" />
+  <title>Dylan Rafael Mamani Duarte | Engenharia de Dados &amp; Backend</title>
+
+  <!-- Google Fonts: Outfit (Headings), Source Sans 3 (Body), JetBrains Mono (Code/Tags) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       1. DESIGN TOKENS & CUSTOM PROPERTIES
+       ========================================================================== */
+    :root {
+      --bg-primary: #090a0f;
+      --bg-secondary: #0e1017;
+      --surface-card: #11131a;
+      --surface-card-hover: #151822;
+      --border-subtle: #1e2230;
+      --border-strong: #2b3145;
+
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+
+      /* Acento técnico único: Ciano refinado */
+      --accent: #06b6d4;
+      --accent-light: #22d3ee;
+      --accent-dim: rgba(6, 182, 212, 0.12);
+      --accent-border: rgba(6, 182, 212, 0.35);
+      --accent-glow: rgba(6, 182, 212, 0.08);
+
+      /* Cores de identidade por linguagem nos cards */
+      --lang-python: #38bdf8;
+      --lang-sql: #34d399;
+      --lang-node: #a3e635;
+      --lang-docker: #60a5fa;
+
+      --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --nav-height: 76px;
+      --container-max: 1120px;
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --transition-base: 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ==========================================================================
+       2. RESET & BASE STYLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    ::selection {
+      background-color: var(--accent-dim);
+      color: var(--accent-light);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    /* ==========================================================================
+       3. LAYOUT UTILITIES & TYPOGRAPHY
+       ========================================================================== */
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section {
+      padding: 6.5rem 0;
+      position: relative;
+    }
+
+    .section-divider {
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .section-header {
+      margin-bottom: 3.25rem;
+      max-width: 640px;
+    }
+
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-kicker::before {
+      content: "";
+      display: inline-block;
+      width: 18px;
+      height: 1.5px;
+      background-color: var(--accent);
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.85rem, 3.2vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.18;
+      color: var(--text-primary);
+      margin-bottom: 0.85rem;
+    }
+
+    .section-subtitle {
+      font-size: 1.0625rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Animação Reveal via IntersectionObserver */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       4. FIXED NAVBAR (GLASSMORPHISM ON SCROLL)
+       ========================================================================== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      z-index: 100;
+      transition: background-color 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    .navbar.scrolled {
+      background-color: rgba(9, 10, 15, 0.82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom-color: var(--border-subtle);
+    }
+
+    .navbar-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      transition: opacity var(--transition-base);
+    }
+
+    .brand:hover {
+      opacity: 0.9;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-strong);
+      display: grid;
+      place-items: center;
+      color: var(--accent-light);
+      transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .brand:hover .brand-mark {
+      border-color: var(--accent-border);
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.25rem;
+    }
+
+    .nav-link {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      position: relative;
+      padding: 0.35rem 0;
+      transition: color var(--transition-base);
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background-color: var(--accent);
+      transition: width var(--transition-base);
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--text-primary);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background-color: var(--surface-card);
+      color: var(--text-primary);
+      transition: all var(--transition-base);
+    }
+
+    .nav-cta:hover {
+      border-color: var(--accent-border);
+      color: var(--accent-light);
+      background-color: var(--accent-dim);
+    }
+
+    /* Mobile Menu Button */
+    .mobile-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      background-color: var(--surface-card);
+      color: var(--text-primary);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      background-color: rgba(11, 13, 19, 0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 1.5rem;
+      z-index: 99;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      padding: 0.75rem 0.5rem;
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border-bottom: 1px solid rgba(30, 34, 48, 0.6);
+    }
+
+    .mobile-menu a:last-child {
+      border-bottom: none;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--accent-light);
+    }
+
+    /* ==========================================================================
+       5. HERO SECTION
+       ========================================================================== */
+    .hero {
+      min-height: 94vh;
+      padding-top: calc(var(--nav-height) + 4.5rem);
+      padding-bottom: 5rem;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Grade arquitetônica sutil e iluminação radial discreta */
+    .hero-bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(30, 34, 48, 0.35) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(30, 34, 48, 0.35) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 35%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 35%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: -120px;
+      right: 8%;
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.09) 0%, rgba(9, 10, 15, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-strong);
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--accent-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2.4rem, 4.8vw, 3.85rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-role {
+      display: block;
+      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      font-weight: 500;
+      color: var(--accent-light);
+      margin-top: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-summary {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.7;
+      margin-bottom: 2.25rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      padding: 0.8rem 1.45rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all var(--transition-base);
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: #041318;
+      border: 1px solid var(--accent);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-light);
+      border-color: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(6, 182, 212, 0.22);
+    }
+
+    .btn-secondary {
+      background-color: var(--surface-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border-strong);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--surface-card-hover);
+      border-color: var(--accent-border);
+      color: var(--accent-light);
+      transform: translateY(-2px);
+    }
+
+    /* Elemento visual técnico à direita no Hero (Arquitetura de Dados SVG/CSS) */
+    .hero-visual {
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      position: relative;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .terminal-dots span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background-color: var(--border-strong);
+    }
+
+    .terminal-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .pipeline-diagram {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .pipeline-node {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-md);
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      transition: border-color var(--transition-base);
+    }
+
+    .pipeline-node:hover {
+      border-color: var(--accent-border);
+    }
+
+    .node-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .node-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background-color: var(--accent-dim);
+      color: var(--accent-light);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .node-title {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .node-sub {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .node-status {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      background-color: rgba(6, 182, 212, 0.1);
+      color: var(--accent-light);
+      border: 1px solid rgba(6, 182, 212, 0.2);
+    }
+
+    .pipeline-connector {
+      height: 14px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), var(--border-strong));
+      margin-left: 1.95rem;
+    }
+
+    /* ==========================================================================
+       6. SOBRE MIM & COMPETÊNCIAS
+       ========================================================================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--text-secondary);
+      font-size: 1.0625rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.75;
+    }
+
+    .about-text strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .about-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .metric-box {
+      padding: 1.15rem 1.25rem;
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+    }
+
+    .metric-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-light);
+      margin-bottom: 0.25rem;
+    }
+
+    .metric-value {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .skills-panel {
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+    }
+
+    .skills-group {
+      margin-bottom: 1.65rem;
+    }
+
+    .skills-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .skills-group-title {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .skill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.42rem 0.85rem;
+      border-radius: var(--radius-sm);
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--text-primary);
+      transition: all var(--transition-base);
+    }
+
+    .skill-badge:hover {
+      border-color: var(--accent-border);
+      background-color: var(--accent-dim);
+      color: var(--accent-light);
+      transform: translateY(-1px);
+    }
+
+    .skill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--accent);
+    }
+
+    /* ==========================================================================
+       7. PROJETOS (CARDS COM IDENTIDADE POR LINGUAGEM & FILTRO)
+       ========================================================================== */
+    .projects-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .filter-group {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      background-color: var(--surface-card);
+      padding: 0.35rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .filter-btn {
+      padding: 0.45rem 0.95rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: all var(--transition-base);
+    }
+
+    .filter-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .filter-btn.active {
+      background-color: var(--accent-dim);
+      color: var(--accent-light);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+    }
+
+    .repo-direct-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--accent-light);
+      padding: 0.5rem 0.9rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      background-color: var(--surface-card);
+      transition: all var(--transition-base);
+    }
+
+    .repo-direct-link:hover {
+      border-color: var(--accent-border);
+      background-color: var(--accent-dim);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.85rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition-base),
+                  border-color var(--transition-base),
+                  box-shadow var(--transition-base),
+                  background-color var(--transition-base);
+    }
+
+    /* Faixa superior de personalidade por linguagem */
+    .project-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background-color: var(--card-accent, var(--accent));
+      opacity: 0.75;
+      transition: opacity var(--transition-base);
+    }
+
+    .project-card[data-lang="python"] { --card-accent: var(--lang-python); }
+    .project-card[data-lang="sql"] { --card-accent: var(--lang-sql); }
+    .project-card[data-lang="node"] { --card-accent: var(--lang-node); }
+    .project-card[data-lang="docker"] { --card-accent: var(--lang-docker); }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      background-color: var(--surface-card-hover);
+      border-color: var(--border-strong);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-card.hidden {
+      display: none;
+    }
+
+    .project-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .lang-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 0.3rem 0.7rem;
+      border-radius: 6px;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+    }
+
+    .lang-swatch {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--card-accent, var(--accent));
+    }
+
+    .project-ext-link {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+      background-color: var(--bg-secondary);
+      color: var(--text-secondary);
+      display: grid;
+      place-items: center;
+      transition: all var(--transition-base);
+    }
+
+    .project-card:hover .project-ext-link {
+      color: var(--accent-light);
+      border-color: var(--accent-border);
+    }
+
+    .project-title {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.015em;
+    }
+
+    .project-desc {
+      font-size: 0.975rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+      padding-top: 1.15rem;
+      border-top: 1px solid rgba(30, 34, 48, 0.75);
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .tech-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      background-color: rgba(255, 255, 255, 0.03);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .project-cta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .project-repo-anchor {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--accent-light);
+      transition: gap var(--transition-base), color var(--transition-base);
+    }
+
+    .project-repo-anchor:hover {
+      gap: 0.65rem;
+      color: #67e8f9;
+    }
+
+    /* ==========================================================================
+       8. EXPERIÊNCIA PROFISSIONAL (TIMELINE VERTICAL)
+       ========================================================================== */
+    .timeline {
+      position: relative;
+      max-width: 820px;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      left: 6px;
+      width: 1.5px;
+      background: linear-gradient(to bottom, var(--accent), var(--border-subtle) 85%, transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 2.75rem;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-marker {
+      position: absolute;
+      left: -2rem;
+      top: 6px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background-color: var(--bg-primary);
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 0 4px var(--bg-primary);
+    }
+
+    .timeline-card {
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.65rem 1.85rem;
+      transition: border-color var(--transition-base);
+    }
+
+    .timeline-card:hover {
+      border-color: var(--border-strong);
+    }
+
+    .timeline-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem 1rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .timeline-role {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .timeline-period {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-light);
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      background-color: var(--accent-dim);
+      border: 1px solid rgba(6, 182, 212, 0.22);
+    }
+
+    .timeline-company {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .timeline-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .timeline-list li {
+      position: relative;
+      padding-left: 1.15rem;
+      font-size: 0.9625rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .timeline-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.62rem;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: var(--accent);
+    }
+
+    /* ==========================================================================
+       9. CONTATO & FOOTER
+       ========================================================================== */
+    .contact-box {
+      background: linear-gradient(180deg, var(--surface-card) 0%, var(--bg-secondary) 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 3.25rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .contact-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.65rem, 3vw, 2.25rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.85rem;
+    }
+
+    .contact-desc {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 520px;
+      line-height: 1.65;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .contact-card-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.95rem 1.2rem;
+      border-radius: var(--radius-md);
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      transition: all var(--transition-base);
+    }
+
+    .contact-card-link:hover {
+      border-color: var(--accent-border);
+      transform: translateX(4px);
+    }
+
+    .contact-link-info {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .contact-icon-wrap {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--accent-light);
+      display: grid;
+      place-items: center;
+    }
+
+    .contact-link-label {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      display: block;
+    }
+
+    .contact-link-handle {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 2.25rem 0;
+      margin-top: 4rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .footer-note {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+
+    /* Toast de feedback ao copiar e-mail */
+    .toast-notification {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background-color: var(--surface-card);
+      border: 1px solid var(--accent-border);
+      color: var(--text-primary);
+      padding: 0.8rem 1.2rem;
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: all 0.3s ease;
+      z-index: 200;
+    }
+
+    .toast-notification.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       10. RESPONSIVIDADE (MOBILE-FIRST ADAPTATIONS)
+       ========================================================================== */
+    @media (max-width: 960px) {
+      .hero-grid,
+      .about-grid,
+      .contact-box {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: calc(var(--nav-height) + 3rem);
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-links,
+      .nav-cta {
+        display: none;
+      }
+
+      .mobile-toggle {
+        display: flex;
+      }
+
+      .section {
+        padding: 4.75rem 0;
+      }
+
+      .about-metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline {
+        padding-left: 1.5rem;
+      }
+
+      .timeline-marker {
+        left: -1.5rem;
+      }
+
+      .contact-box {
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       HEADER & NAVEGAÇÃO FIXA
+       ======================================================================== -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar-inner">
+      <a href="#inicio" class="brand" aria-label="Página inicial - Dylan Rafael Mamani Duarte">
+        <span class="brand-mark">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="4 17 10 11 4 5"></polyline>
+            <line x1="12" y1="19" x2="20" y2="19"></line>
+          </svg>
+        </span>
+        <span>D. Duarte</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Navegação principal">
+        <a href="#sobre" class="nav-link">Sobre</a>
+        <a href="#projetos" class="nav-link">Projetos</a>
+        <a href="#experiencia" class="nav-link">Experiência</a>
+        <a href="#contato" class="nav-link">Contato</a>
+      </nav>
+
+      <a href="https://github.com/EuSouDylan-TI/Projetos-Dylan" target="_blank" rel="noopener noreferrer" class="nav-cta">
+        github/Projetos-Dylan
+      </a>
+
+      <button type="button" class="mobile-toggle" id="mobileToggle" aria-label="Abrir menu de navegação" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="7" x2="21" y2="7"></line>
+          <line x1="3" y1="17" x2="21" y2="17"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Menu Mobile -->
+    <div class="mobile-menu" id="mobileMenu" aria-label="Menu mobile">
+      <a href="#sobre" class="mobile-link">Sobre Mim</a>
+      <a href="#projetos" class="mobile-link">Projetos</a>
+      <a href="#experiencia" class="mobile-link">Experiência</a>
+      <a href="#contato" class="mobile-link">Contato</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ======================================================================
+         1. HERO SECTION
+         ====================================================================== -->
+    <section class="hero" id="inicio">
+      <div class="hero-bg-grid" aria-hidden="true"></div>
+      <div class="hero-glow" aria-hidden="true"></div>
+
+      <div class="container hero-grid">
+        <div class="hero-content reveal">
+          <div class="hero-badge">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span>Engenharia de Dados &amp; Desenvolvimento Backend</span>
+          </div>
+
+          <h1 class="hero-title">
+            Dylan Rafael Mamani Duarte
+            <span class="hero-role">Arquitetura de Dados, Pipelines ETL &amp; Sistemas Escaláveis</span>
+          </h1>
+
+          <!-- Resumo profissional de 2-3 linhas -->
+          <p class="hero-summary">
+            Profissional de Tecnologia da Informação focado na construção de pipelines de dados confiáveis, análise analítica orientada a métricas e desenvolvimento backend. Transformo dados brutos em estruturas íntegras e aplicações eficientes para apoiar decisões estratégicas.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#projetos" class="btn btn-primary">
+              <span>Ver Projetos</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+
+            <a href="https://www.linkedin.com/in/dylan-rafael-mamani-duarte-1683b8447/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+              <span>LinkedIn</span>
+            </a>
+
+            <a href="https://github.com/EuSouDylan-TI/Projetos-Dylan" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+              <span>GitHub</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Diagrama Arquitetural Técnico (Visual limpo sem imagens externas) -->
+        <aside class="hero-visual reveal" aria-label="Fluxo de Engenharia de Dados">
+          <div class="terminal-header">
+            <div class="terminal-dots" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <span class="terminal-label">data_pipeline.architecture</span>
+          </div>
+
+          <div class="pipeline-diagram">
+            <div class="pipeline-node">
+              <div class="node-left">
+                <div class="node-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                  </svg>
+                </div>
+                <div>
+                  <div class="node-title">Ingestão &amp; Extração</div>
+                  <div class="node-sub">APIs REST, SQL, Logs &amp; CSV</div>
+                </div>
+              </div>
+              <span class="node-status">RAW</span>
+            </div>
+
+            <div class="pipeline-connector" aria-hidden="true"></div>
+
+            <div class="pipeline-node">
+              <div class="node-left">
+                <div class="node-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 18 22 12 16 6"></polyline>
+                    <polyline points="8 6 2 12 8 18"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <div class="node-title">Processamento ETL</div>
+                  <div class="node-sub">Python, Pandas, Validação &amp; Limpeza</div>
+                </div>
+              </div>
+              <span class="node-status">CLEAN</span>
+            </div>
+
+            <div class="pipeline-connector" aria-hidden="true"></div>
+
+            <div class="pipeline-node">
+              <div class="node-left">
+                <div class="node-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                  </svg>
+                </div>
+                <div>
+                  <div class="node-title">Modelagem &amp; Entrega</div>
+                  <div class="node-sub">Data Warehouse, Analytics &amp; BI</div>
+                </div>
+              </div>
+              <span class="node-status">SERVE</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         2. SOBRE MIM & COMPETÊNCIAS
+         ====================================================================== -->
+    <section class="section section-divider" id="sobre">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-kicker">Sobre Mim</span>
+          <h2 class="section-title">Engenharia sólida para transformar dados em inteligência operacional</h2>
+        </div>
+
+        <div class="about-grid">
+          <!-- Texto profissional baseado no perfil de Dados & Backend -->
+          <div class="about-text reveal">
+            <p>
+              Sou <strong>Dylan Rafael Mamani Duarte</strong>, profissional de Tecnologia da Informação com atuação voltada para <strong>Engenharia de Dados, Análise de Dados e Desenvolvimento Backend</strong>. Minha abordagem combina rigor técnico na estruturação de bancos de dados com automação inteligente de processos.
+            </p>
+            <p>
+              Ao longo da minha trajetória, concentrei esforços na resolução de gargalos operacionais por meio de scripts em <strong>Python</strong>, consultas analíticas otimizadas em <strong>SQL</strong> e integrações via APIs. Acredito que boas decisões dependem de dados íntegros, rastreáveis e entregues com baixa latência.
+            </p>
+            <p>
+              Busco continuamente evoluir arquiteturas de ingestão, modelagem dimensional e boas práticas de engenharia de software — como versionamento com Git, containerização e código limpo — para entregar soluções escaláveis e de fácil manutenção.
+            </p>
+
+            <div class="about-metrics">
+              <div class="metric-box">
+                <div class="metric-label">Foco Principal</div>
+                <div class="metric-value">Dados, ETL &amp; Backend</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-label">Repositório Ativo</div>
+                <div class="metric-value">EuSouDylan-TI</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Grid de Competências Técnicas -->
+          <div class="skills-panel reveal" aria-label="Competências técnicas">
+            <div class="skills-group">
+              <h3 class="skills-group-title">Linguagens &amp; Core</h3>
+              <div class="skills-list">
+                <span class="skill-badge"><span class="skill-dot"></span>Python</span>
+                <span class="skill-badge"><span class="skill-dot"></span>SQL</span>
+                <span class="skill-badge"><span class="skill-dot"></span>JavaScript / Node.js</span>
+                <span class="skill-badge"><span class="skill-dot"></span>Shell Script</span>
+              </div>
+            </div>
+
+            <div class="skills-group">
+              <h3 class="skills-group-title">Engenharia &amp; Análise de Dados</h3>
+              <div class="skills-list">
+                <span class="skill-badge"><span class="skill-dot"></span>Pipelines ETL / ELT</span>
+                <span class="skill-badge"><span class="skill-dot"></span>Pandas &amp; NumPy</span>
+                <span class="skill-badge"><span class="skill-dot"></span>Modelagem Dimensional</span>
+                <span class="skill-badge"><span class="skill-dot"></span>Análise Exploratória (EDA)</span>
+                <span class="skill-badge"><span class="skill-dot"></span>Power BI &amp; Dashboards</span>
+              </div>
+            </div>
+
+            <div class="skills-group">
+              <h3 class="skills-group-title">Bancos de Dados &amp; Infraestrutura</h3>
+              <div class="skills-list">
+                <span class="skill-badge"><span class="skill-dot"></span>PostgreSQL</span>
+                <span class="skill-badge"><span class="skill-dot"></span>MySQL / SQLite</span>
+                <span class="skill-badge"><span class="skill-dot"></span>REST APIs</span>
+                <span class="skill-badge"><span class="skill-dot"></span>Docker</span>
+                <span class="skill-badge"><span class="skill-dot"></span>Git &amp; GitHub</span>
+                <span class="skill-badge"><span class="skill-dot"></span>Linux</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         3. PROJETOS (REPOSITÓRIO PROJETOS-DYLAN & SOLUÇÕES)
+         ====================================================================== -->
+    <section class="section section-divider" id="projetos">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-kicker">Portfólio Técnico</span>
+          <h2 class="section-title">Projetos em Dados, Automação &amp; Backend</h2>
+          <p class="section-subtitle">
+            Implementações desenvolvidas e documentadas no repositório principal <strong>Projetos-Dylan</strong>, estruturadas com foco em performance, clareza arquitetural e resolução de problemas reais.
+          </p>
+        </div>
+
+        <!-- Barra de Filtro e Link Direto do Repositório -->
+        <div class="projects-toolbar reveal">
+          <div class="filter-group" role="tablist" aria-label="Filtrar projetos por categoria">
+            <button type="button" class="filter-btn active" data-filter="all">Todos</button>
+            <button type="button" class="filter-btn" data-filter="dados">Dados &amp; ETL</button>
+            <button type="button" class="filter-btn" data-filter="backend">Backend &amp; Automação</button>
+          </div>
+
+          <a href="https://github.com/EuSouDylan-TI/Projetos-Dylan" target="_blank" rel="noopener noreferrer" class="repo-direct-link">
+            <span>Explorar Repositório Completo</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Grid de Cards de Projeto (Edite títulos/descrições conforme módulos específicos do seu README) -->
+        <div class="projects-grid">
+          <!-- Card 1: Python / Dados -->
+          <article class="project-card reveal" data-category="dados" data-lang="python">
+            <div>
+              <div class="project-top">
+                <span class="lang-indicator">
+                  <span class="lang-swatch" aria-hidden="true"></span>
+                  <span>Python</span>
+                </span>
+                <a href="https://github.com/EuSouDylan-TI/Projetos-Dylan" target="_blank" rel="noopener noreferrer" class="project-ext-link" aria-label="Abrir projeto Pipeline ETL e Análise Exploratória no GitHub">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                </a>
+              </div>
+
+              <h3 class="project-title">Pipeline ETL &amp; Análise Exploratória de Dados</h3>
+              <p class="project-desc">
+                Fluxo automatizado de extração, higienização e padronização de bases heterogêneas. Resolve inconsistências de schema, valores ausentes e duplicidades, gerando datasets analíticos prontos para consumo em relatórios gerenciais.
+              </p>
+            </div>
+
+            <div class="project-footer">
+              <div class="project-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Pandas</span>
+                <span class="tech-tag">NumPy</span>
+                <span class="tech-tag">ETL</span>
+                <span class="tech-tag">Jupyter</span>
+              </div>
+              <div class="project-cta-row">
+                <a href="https://github.com/EuSouDylan-TI/Projetos-Dylan" target="_blank" rel="noopener noreferrer" class="project-repo-anchor">
+                  <span>Ver código no GitHub</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2: SQL / Data Warehouse -->
+          <article class="project-card reveal" data-category="dados" data-lang="sql">
+            <div>
+              <div class="project-top">
+                <span class="lang-indicator">
+                  <span class="lang-swatch" aria-hidden="true"></span>
+                  <span>SQL / PostgreSQL</span>
+                </span>
+                <a href="https://github.com/EuSouDylan-TI/Projetos-Dylan" target="_blank" rel="noopener noreferrer" class="project-ext-link" aria-label="Abrir projeto Modelagem Relacional e Analytics SQL no GitHub">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                </a>
+              </div>
+
+              <h3 class="project-title">Modelagem Relacional &amp; Consultas Analíticas</h3>
+              <p class="project-desc">
+                Estruturação de banco de dados normalizado e views analíticas otimizadas com CTEs, Window Functions e indexação estratégica. Reduz o tempo de resposta em consultas complexas de indicadores de desempenho (KPIs).
+              </p>
+            </div>
+
+            <div class="project-footer">
+              <div class="project-tags">
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">SQL Avançado</span>
+                <span class="tech-tag">Window Functions</span>
+                <span class="tech-tag">Modelagem</span>
+              </div>
+              <div class="project-cta-row">
+                <a href="https://github.com/EuSouDylan-TI/Projetos-Dylan" target="_blank" rel="noopener noreferrer" class="project-repo-anchor">
+                  <span>Ver código no GitHub</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3: Backend / API -->
+          <article class="project-card reveal" data-category="backend" data-lang="python">
+            <div>
+              <div class="project-top">
+                <span class="lang-indicator">
+                  <span class="lang-swatch" aria-hidden="true"></span>
+                  <span>Python / API</span>
+                </span>
+                <a href="https://github.com/EuSouDylan-TI/Projetos-Dylan" target="_blank" rel="noopener noreferrer" class="project-ext-link" aria-label="Abrir projeto API RESTful de Integração de Dados no GitHub">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                </a>
+              </div>
+
+              <h3 class="project-title">API RESTful para Ingestão e Consulta de Registros</h3>
+              <p class="project-desc">
+                Serviço backend modular com validação estrita de payloads, tratamento padronizado de erros e persistência relacional. Permite que aplicações clientes enviem e consultem métricas operacionais com segurança e rastreabilidade.
+              </p>
+            </div>
+
+            <div class="project-footer">
+              <div class="project-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">FastAPI / Flask</span>
+                <span class="tech-tag">REST API</span>
+                <span class="tech-tag">JSON Schema</span>
+                <span class="tech-tag">SQL</span>
+              </div>
+              <div class="project-cta-row">
+                <a href="https://github.com/EuSouDylan-TI/Projetos-Dylan" target="_blank" rel="noopener noreferrer" class="project-repo-anchor">
+                  <span>Ver código no GitHub</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 4: Automação / Coleta -->
+          <article class="project-card reveal" data-category="backend" data-lang="node">
+            <div>
+              <div class="project-top">
+                <span class="lang-indicator">
+                  <span class="lang-swatch" aria-hidden="true"></span>
+                  <span>Automação &amp; CLI</span>
+                </span>
+                <a href="https://github.com/EuSouDylan-TI/Projetos-Dylan" target="_blank" rel="noopener noreferrer" class="project-ext-link" aria-label="Abrir projeto Coletor Web e Automação de Relatórios no GitHub">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                </a>
+              </div>
+
+              <h3 class="project-title">Coletor Web &amp; Automação de Rotinas Operacionais</h3>
+              <p class="project-desc">
+                Conjunto de scripts de automação para captura estruturada de dados públicos, monitoramento de status de serviços e geração automática de relatórios consolidados, eliminando tarefas manuais repetitivas.
+              </p>
+            </div>
+
+            <div class="project-footer">
+              <div class="project-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Web Scraping</span>
+                <span class="tech-tag">Automação</span>
+                <span class="tech-tag">Git</span>
+                <span class="tech-tag">Linux</span>
+              </div>
+              <div class="project-cta-row">
+                <a href="https://github.com/EuSouDylan-TI/Projetos-Dylan" target="_blank" rel="noopener noreferrer" class="project-repo-anchor">
+                  <span>Ver código no GitHub</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         4. EXPERIÊNCIA PROFISSIONAL (TIMELINE)
+         ====================================================================== -->
+    <section class="section section-divider" id="experiencia">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-kicker">Trajetória</span>
+          <h2 class="section-title">Experiência &amp; Atuação Técnica</h2>
+          <p class="section-subtitle">
+            Histórico focado em operações de tecnologia, tratamento de informações, desenvolvimento de ferramentas internas e suporte analítico.
+          </p>
+        </div>
+
+        <!-- Timeline vertical (Personalize nomes de empresas e datas exatas conforme seu currículo) -->
+        <div class="timeline">
+          <article class="timeline-item reveal">
+            <span class="timeline-marker" aria-hidden="true"></span>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <h3 class="timeline-role">Analista de Dados &amp; Desenvolvimento Backend</h3>
+                <span class="timeline-period">2024 — Atual</span>
+              </div>
+              <div class="timeline-company">Projetos Técnicos &amp; Soluções em Dados</div>
+              <ul class="timeline-list">
+                <li>Desenvolvimento de rotinas ETL em Python para extração, limpeza e consolidação de múltiplas fontes de dados operacionais.</li>
+                <li>Elaboração de consultas SQL complexas e modelagem de tabelas para suporte a indicadores de negócio e relatórios analíticos.</li>
+                <li>Criação de serviços backend e scripts de automação voltados à integração entre sistemas e redução de falhas manuais.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="timeline-item reveal">
+            <span class="timeline-marker" aria-hidden="true"></span>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <h3 class="timeline-role">Assistente / Analista de Tecnologia da Informação</h3>
+                <span class="timeline-period">2022 — 2024</span>
+              </div>
+              <div class="timeline-company">Operações de TI &amp; Infraestrutura de Sistemas</div>
+              <ul class="timeline-list">
+                <li>Administração e manutenção da integridade de bancos de dados relacionais, rotinas de backup e controle de acessos.</li>
+                <li>Diagnóstico técnico de incidentes em sistemas corporativos, redes e ambientes Linux/Windows com foco em continuidade operacional.</li>
+                <li>Documentação técnica de fluxos de informação e implementação de melhorias em processos internos de TI.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="timeline-item reveal">
+            <span class="timeline-marker" aria-hidden="true"></span>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <h3 class="timeline-role">Formação &amp; Pesquisa Aplicada em Dados</h3>
+                <span class="timeline-period">Contínuo</span>
+              </div>
+              <div class="timeline-company">Engenharia de Software, Ciência de Dados &amp; Cloud</div>
+              <ul class="timeline-list">
+                <li>Aprofundamento prático em arquitetura de Data Warehouses, orquestração de pipelines e boas práticas de engenharia de software.</li>
+                <li>Publicação contínua de estudos de caso, algoritmos e ferramentas open-source no GitHub (EuSouDylan-TI).</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         5. CONTATO & FOOTER
+         ====================================================================== -->
+    <section class="section section-divider" id="contato">
+      <div class="container">
+        <div class="contact-box reveal">
+          <div>
+            <span class="section-kicker">Contato</span>
+            <h2 class="contact-title">Vamos conversar sobre dados, backend e novos desafios.</h2>
+            <p class="contact-desc">
+              Estou aberto a oportunidades nas áreas de Engenharia de Dados, Análise de Dados, Ciência de Dados e Desenvolvimento Backend, bem como colaborações em projetos técnicos.
+            </p>
+          </div>
+
+          <div class="contact-links">
+            <a href="https://www.linkedin.com/in/dylan-rafael-mamani-duarte-1683b8447/" target="_blank" rel="noopener noreferrer" class="contact-card-link">
+              <div class="contact-link-info">
+                <span class="contact-icon-wrap">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                    <rect x="2" y="9" width="4" height="12"></rect>
+                    <circle cx="4" cy="4" r="2"></circle>
+                  </svg>
+                </span>
+                <div>
+                  <span class="contact-link-label">LinkedIn</span>
+                  <span class="contact-link-handle">dylan-rafael-mamani-duarte</span>
+                </div>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </a>
+
+            <a href="https://github.com/EuSouDylan-TI" target="_blank" rel="noopener noreferrer" class="contact-card-link">
+              <div class="contact-link-info">
+                <span class="contact-icon-wrap">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                  </svg>
+                </span>
+                <div>
+                  <span class="contact-link-label">GitHub</span>
+                  <span class="contact-link-handle">@EuSouDylan-TI</span>
+                </div>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </a>
+
+            <!-- Botão para copiar contato direto (atualize o data-email com seu e-mail profissional) -->
+            <button type="button" class="contact-card-link" id="copyEmailBtn" data-email="dylan.duarte.ti@gmail.com">
+              <div class="contact-link-info">
+                <span class="contact-icon-wrap">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                </span>
+                <div style="text-align: left;">
+                  <span class="contact-link-label">Copiar E-mail</span>
+                  <span class="contact-link-handle" id="emailLabel">dylan.duarte.ti@gmail.com</span>
+                </div>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>&copy; <span id="currentYear"></span> Dylan Rafael Mamani Duarte. Todos os direitos reservados.</p>
+      <p class="footer-note">Engenharia de Dados &amp; Desenvolvimento Backend</p>
+    </div>
+  </footer>
+
+  <!-- Notificação discreta ao copiar e-mail -->
+  <div class="toast-notification" id="toast" role="status" aria-live="polite">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <span>Endereço de e-mail copiado para a área de transferência.</span>
+  </div>
+
+  <!-- ========================================================================
+       JAVASCRIPT VANILLA (SCROLL, REVEAL, FILTROS & MENU MOBILE)
+       ======================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      // 1. Ano dinâmico no rodapé
+      const yearEl = document.getElementById('currentYear');
+      if (yearEl) {
+        yearEl.textContent = new Date().getFullYear();
+      }
+
+      // 2. Navbar com efeito glassmorphism ao rolar e destaque de seção ativa
+      const navbar = document.getElementById('navbar');
+      const sections = document.querySelectorAll('main section[id]');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      function handleScroll() {
+        if (window.scrollY > 24) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+
+        // Atualiza link ativo na barra de navegação
+        let currentSectionId = '';
+        const scrollPosition = window.scrollY + 180;
+
+        sections.forEach((section) => {
+          const top = section.offsetTop;
+          const height = section.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            currentSectionId = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach((link) => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + currentSectionId) {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll();
+
+      // 3. Menu responsivo mobile
+      const mobileToggle = document.getElementById('mobileToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+
+      if (mobileToggle && mobileMenu) {
+        mobileToggle.addEventListener('click', () => {
+          const isOpen = mobileMenu.classList.toggle('open');
+          mobileToggle.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        mobileLinks.forEach((link) => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            mobileToggle.setAttribute('aria-expanded', 'false');
+          });
+        });
+      }
+
+      // 4. Animação suave de entrada com IntersectionObserver
+      const revealElements = document.querySelectorAll('.reveal');
+
+      if ('IntersectionObserver' in window) {
+        const revealObserver = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            threshold: 0.12,
+            rootMargin: '0px 0px -40px 0px'
+          }
+        );
+
+        revealElements.forEach((el) => revealObserver.observe(el));
+      } else {
+        // Fallback para navegadores antigos
+        revealElements.forEach((el) => el.classList.add('is-visible'));
+      }
+
+      // 5. Filtro interativo de projetos
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const projectCards = document.querySelectorAll('.project-card');
+
+      filterButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const selectedFilter = btn.getAttribute('data-filter');
+
+          filterButtons.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          projectCards.forEach((card) => {
+            const cardCategory = card.getAttribute('data-category');
+            if (selectedFilter === 'all' || cardCategory === selectedFilter) {
+              card.classList.remove('hidden');
+              card.classList.add('is-visible');
+            } else {
+              card.classList.add('hidden');
+            }
+          });
+        });
+      });
+
+      // 6. Copiar e-mail com fallback compatível com iframes (execCommand)
+      const copyEmailBtn = document.getElementById('copyEmailBtn');
+      const toast = document.getElementById('toast');
+      let toastTimer = null;
+
+      function showToast() {
+        if (!toast) return;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3200);
+      }
+
+      if (copyEmailBtn) {
+        copyEmailBtn.addEventListener('click', () => {
+          const email = copyEmailBtn.getAttribute('data-email') || '';
+          const tempInput = document.createElement('textarea');
+          tempInput.value = email;
+          tempInput.setAttribute('readonly', '');
+          tempInput.style.position = 'absolute';
+          tempInput.style.left = '-9999px';
+          document.body.appendChild(tempInput);
+          tempInput.select();
+
+          try {
+            document.execCommand('copy');
+            showToast();
+          } catch (err) {
+            console.error('Não foi possível copiar o e-mail:', err);
+          } finally {
+            document.body.removeChild(tempInput);
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
