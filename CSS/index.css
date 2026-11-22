@@ -187,7 +187,7 @@
       justify-content: space-between;
     }
 
-    .brand {
+    .marca {
       display: inline-flex;
       align-items: center;
       gap: 0.75rem;
@@ -199,11 +199,11 @@
       transition: opacity var(--transition-base);
     }
 
-    .brand:hover {
+    .marca:hover {
       opacity: 0.9;
     }
 
-    .brand-mark {
+    .emblema {
       width: 34px;
       height: 34px;
       border-radius: 8px;
@@ -215,7 +215,7 @@
       transition: border-color var(--transition-base), box-shadow var(--transition-base);
     }
 
-    .brand:hover .brand-mark {
+    .marca:hover .emblema {
       border-color: var(--accent-border);
       box-shadow: 0 0 16px var(--accent-glow);
     }
@@ -323,9 +323,9 @@
     }
 
     /* ==========================================================================
-       5. HERO SECTION
+       5. Inicio Seção
        ========================================================================== */
-    .hero {
+    .inicio {
       min-height: 94vh;
       padding-top: calc(var(--nav-height) + 4.5rem);
       padding-bottom: 5rem;
@@ -336,7 +336,7 @@
     }
 
     /* Grade arquitetônica sutil e iluminação radial discreta */
-    .hero-bg-grid {
+    .inicio-bg-grid {
       position: absolute;
       inset: 0;
       background-image:
@@ -349,7 +349,7 @@
       z-index: 0;
     }
 
-    .hero-glow {
+    .inicio-glow {
       position: absolute;
       top: -120px;
       right: 8%;
@@ -360,7 +360,7 @@
       z-index: 0;
     }
 
-    .hero-grid {
+    .inicio-grid {
       position: relative;
       z-index: 1;
       display: grid;
@@ -369,7 +369,7 @@
       align-items: center;
     }
 
-    .hero-badge {
+    .inicio-badge {
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
@@ -391,7 +391,7 @@
       box-shadow: 0 0 8px var(--accent);
     }
 
-    .hero-title {
+    .inicio-title {
       font-family: var(--font-heading);
       font-size: clamp(2.4rem, 4.8vw, 3.85rem);
       font-weight: 700;
@@ -401,7 +401,7 @@
       margin-bottom: 1.25rem;
     }
 
-    .hero-role {
+    .inicio-role {
       display: block;
       font-size: clamp(1.15rem, 2vw, 1.45rem);
       font-weight: 500;
@@ -410,7 +410,7 @@
       letter-spacing: -0.01em;
     }
 
-    .hero-summary {
+    .inicio-summary {
       font-size: 1.125rem;
       color: var(--text-secondary);
       max-width: 600px;
@@ -418,7 +418,7 @@
       margin-bottom: 2.25rem;
     }
 
-    .hero-actions {
+    .inicio-actions {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -463,8 +463,8 @@
       transform: translateY(-2px);
     }
 
-    /* Elemento visual técnico à direita no Hero (Arquitetura de Dados SVG/CSS) */
-    .hero-visual {
+    /* Elemento visual técnico à direita no Inicio (Arquitetura de Dados SVG/CSS) */
+    .inicio-visual {
       background-color: var(--surface-card);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
@@ -1147,14 +1147,14 @@
        10. RESPONSIVIDADE (MOBILE-FIRST ADAPTATIONS)
        ========================================================================== */
     @media (max-width: 960px) {
-      .hero-grid,
+      .inicio-grid,
       .about-grid,
       .contact-box {
         grid-template-columns: 1fr;
         gap: 2.5rem;
       }
 
-      .hero {
+      .inicio {
         min-height: auto;
         padding-top: calc(var(--nav-height) + 3rem);
       }
